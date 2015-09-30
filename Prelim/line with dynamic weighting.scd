@@ -2,11 +2,12 @@
 //dynamic weighting of lines
 (
 var lines, arraySize=2048, notePchArr, noteStartArr, noteDurArr, noteVeloArr;
-var w1,w2, gestureDur=100, pch, start=0, dur, velo;
-var speedUpProcess=20; //faster than RT. use to timescale envelopes, the while loop condition and the while loop wait time
+var w1,w2, gestureDur=30, pch, start=0, dur, velo;
+var speedUpProcess=10; //faster than RT. use to timescale envelopes, the while loop condition and the while loop wait time
 var weighting, gestureDurScale;
 var notePch, noteStart/*e.g. 8ths, 16th, etc*/, noteDur, noteVelo;
 var m, filename, numMIDITracks=1, bpm=60; //bpm doesn't matter when importing as SMF into a DAW
+var veloSwitch=0;
 
 notePchArr = Array.new(arraySize); //MIDI pchs added here. make a big array to avoid running out of space
 noteStartArr = Array.new(arraySize); //start times added here
@@ -38,7 +39,8 @@ lines = Pwrand([
 fork{
 	var t1, t2;
 
-	"thinking...".postln;
+	//"thinking...".postln;
+	"wait ".post; gestureDurScale.post; " seconds...".postln;
 
 	t1 = Main.elapsedTime;
 	//first make the arrays
@@ -65,9 +67,9 @@ fork{
 	noteStartArr = noteStartArr.integrate; //.integrate the note start times
 
 	//post the arrays:
-	"pchs:".postln;
+	/*"pchs:".postln;
 	notePchArr.postcs;
-	/*"start times:".postln;
+	"start times:".postln;
 	noteStartArr.postcs;
 	"durs:".postln;
 	noteDurArr.postcs;
@@ -81,17 +83,17 @@ fork{
 
 	//MIDI data
 	notePchArr.size.do{|i,c|
-		var start_t;
-		if (c==0){start_t=0}{start_t=noteStartArr[c]-(noteStartArr[c]-noteStartArr[c-1])};
-		//if (velo_sw==0){velocity = velo[i]}{velocity = velo2.next};
+		var start_t, velocity;
+		if (c==0){start_t=0}{start_t=noteStartArr[c]-(noteStartArr[c]-noteStartArr[c-1])}; //so that the first note starts at time 0
+		//if (veloSwitch==0){velocity = noteVeloArr[c]}{velocity = velo2.next};
 		m.addNote( notePchArr[c], noteVeloArr[c], start_t, noteDurArr[c]/*note length*/, 0, 0, 0 ); //note num, velo, startTime, upVel, chan, track*/
 	};
 
-	//write to the MIDI file
+	//finish file
 	m.adjustEndOfTrack;
 	// 0.1.wait; //unncessary?
 	m.write;
-	"done".postln;
+	"MIDI file is ready.".postln;
 };
 )
 
