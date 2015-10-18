@@ -1,6 +1,4 @@
-
-
-//begining. lines transform from homogenous to varied rhythmically - v4 Added some poly-tonality and fixed envelopes (had one extra time value). changed 4th pattern
+//wind gestures 2
 (
 var lineWeighting, lw1, lw2, lw3, restWeighting, gestureDur=60, speedUpProcess=40, gestureDurScale;
 var line1_restWeighting, line1_rw1, line1_rw2, line1_rw3, line1_rw4, line1_rw5, line1_rw6, line1_rw7;
@@ -9,10 +7,6 @@ var line3_restWeighting, line3_rw1, line3_rw2, line3_rw3, line3_rw4, line3_rw5, 
 var bpm;
 var p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12;
 var c1,c2,c3,c4,c5,c6,c7,c8;
-
-/*var line1_rw1, line1_rw2, line1_rw3, line1_rw4, line1_rw5, line1_rw6;
-var line2_rw1, line2_rw2, line2_rw3, line2_rw4, line2_rw5, line2_rw6;
-var line3_rw1, line3_rw2, line3_rw3, line3_rw4, line3_rw5, line3_rw6;*/
 var testenv, testenv2, testenv3;
 
 bpm=150;
@@ -35,42 +29,9 @@ line1_rw7 = Env([1,1,1,1,1,1,0,0], Array.fill(7, {1/8}).normalizeSum*gestureDurS
 
 line2_rw1 = Env(Array.fill(8, {0}), Array.fill(7, {1/8}).normalizeSum*gestureDurScale);
 
-/*
-line2_rw1 = Env([0,0,0,0], [1,1,1].normalizeSum*gestureDurScale);
-line2_rw2 = Env([0.5,0.5,5,5], [1,1,1].normalizeSum*gestureDurScale);
-line2_rw3 = Env([0,0,5,5], [1,1,1].normalizeSum*gestureDurScale);
-line2_rw4 = Env([0,0,1,1], [1,1,1].normalizeSum*gestureDurScale);
-line2_rw5 = Env([5,5,0,0], [1,1,1].normalizeSum*gestureDurScale);
-line2_rw6 = Env([10,10,0,0], [1,1,1].normalizeSum*gestureDurScale);
-
-line3_rw1 = Env([0,0,1,1], [1,1,1].normalizeSum*gestureDurScale);
-line3_rw2 = Env([0.5,0.5,10,10], [1,1,1].normalizeSum*gestureDurScale);
-line3_rw3 = Env([0,0,0,0], [1,1,1].normalizeSum*gestureDurScale);
-line3_rw4 = Env([0,0,1,1], [1,1,1].normalizeSum*gestureDurScale);
-line3_rw5 = Env([5,5,0,0], [1,1,1].normalizeSum*gestureDurScale);
-line3_rw6 = Env([10,10,0,0], [1,1,1].normalizeSum*gestureDurScale);
-*/
-
-/*testenv = Env([0,0,1,1], [ 1,2,1 ].normalizeSum*gestureDurScale);
-testenv2 = Env([0,0,0,0], [ 1,2,1 ].normalizeSum*gestureDurScale);
-testenv3  = Env([1,1,0,0], [1,2,1].normalizeSum*gestureDurScale);*/
-
 //lineWeighting = Ptuple([lw1, lw2, lw3]).collect(_.normalizeSum).asStream; //dynamic weighting method using envelopes
 lineWeighting = #[1,1,0.5, 0.2].normalizeSum; //static values
 
-/*line1_restWeighting = #[0,1,0,0,5,8].normalizeSum;
-line2_restWeighting = #[0,1,0,0,5,8].normalizeSum;
-line3_restWeighting = #[0,1,0,0,5,8].normalizeSum;*/
-
-/*
-line1_restWeighting = Ptuple([line1_rw1, line1_rw2, line1_rw3, line1_rw4, line1_rw5, line1_rw6, line1_rw7]).collect(_.normalizeSum).asStream;
-line2_restWeighting = Ptuple([line2_rw1, line2_rw2, line2_rw3, line2_rw4, line2_rw5, line2_rw6]).collect(_.normalizeSum).asStream;
-line3_restWeighting = Ptuple([line3_rw1, line3_rw2, line3_rw3, line3_rw4, line3_rw5, line3_rw6]).collect(_.normalizeSum).asStream;
-*/
-
-//line1_restWeighting = Ptuple([testenv, testenv2, testenv2, testenv2, testenv2, testenv3]).collect(_.normalizeSum).asStream;
-/*line1_restWeighting = Ptuple([line2_rw1, line1_rw2, line1_rw3, line1_rw4, line1_rw5, line1_rw6, line1_rw7]).collect(_.normalizeSum).asStream;
-line2_restWeighting = Ptuple([line2_rw1, line1_rw2, line1_rw3, line1_rw4, line1_rw5, line1_rw6, line1_rw7]).collect(_.normalizeSum).asStream;*/
 line1_restWeighting = #[0.5,1,0,0,0,0,0].normalizeSum;
 line2_restWeighting = #[0,1,0,0,0,0,0].normalizeSum;
 
@@ -155,11 +116,31 @@ fork{
 						, Ptuple([ Pseq([1]), Pseq([0.5]), Pseq([0.5]), Pseq([0]) ])
 					], [1,1].normalizeSum)
 				])
-				, Pseq([
-					Ptuple([ Pseq([ c6+1, c5+8, c5+4, c5+1, c5+9, c5+7, c5+3, c5+2, c5+8, c5+6, c5+4, c5+3 ]), Pseq( Array.fill(12, 0.25) ), Pseq( Array.fill(12, 0.1) ) ])
-					, Pwrand([
+				, Pwrand([
+					Pseq([
+						Ptuple([ Pseq([ c6+1, c5+8, c5+4, c5+1, c5+9, c5+7, c5+3, c5+2, c5+8, c5+6, c5+4, c5+3 ]), Pseq( Array.fill(12, 0.25) ), Pseq( Array.fill(12, 0.1) ) ])
+						, Pwrand([
+							Ptuple([ Pseq([ c5+6, c5+4, c5+2, c5+1 ]), Pseq(Array.fill(4, 0.25)), Pseq(Array.fill(4, 0.1)) ])
+							, Ptuple([ Pseq([ c5+6, c5+4, c5+2, c5+1 ]), Pseq([1/3,1/3,1/3,1]), Pseq(Array.fill(4, 1/3)) ])
+							, Ptuple([ Pseq([ c5+6, c5+4, c5+2, c5+1 ]), Pseq([1/6,1/6,1/6,1]), Pseq(Array.fill(4, 1/6)) ])
+						], [1,1,0.4].normalizeSum)
+						, Pwrand([ Ptuple([ Pseq([1]), Pseq([0]), Pseq([0]), Pseq([0]) ])
+							, Ptuple([ Pseq([1]), Pseq([0.5]), Pseq([0.5]), Pseq([0]) ])
+						], [1,1].normalizeSum)
+					])
+					, Pseq([
+						Ptuple([ Pseq([ c6+1, c5+8, c5+4, c5+2, c5+9, c5+7, c5+5, c5+3, c5+8, c5+6, c5+4, c5+2]), Pseq( Array.fill(12, 0.25) ), Pseq( Array.fill(12, 0.1) ) ])
+						, Pwrand([
+							Ptuple([ Pseq([ c5+6, c5+4, c5+2, c5+1 ]), Pseq(Array.fill(4, 0.25)), Pseq(Array.fill(4, 0.1)) ])
+							, Ptuple([ Pseq([ c5+6, c5+4, c5+2, c5+1 ]), Pseq([1/3,1/3,1/3,1]), Pseq(Array.fill(4, 1/3)) ])
+							, Ptuple([ Pseq([ c5+6, c5+4, c5+2, c5+1 ]), Pseq([1/6,1/6,1/6,1]), Pseq(Array.fill(4, 1/6)) ])
+						], [1,1,0.4].normalizeSum)
+						, Pwrand([ Ptuple([ Pseq([1]), Pseq([0]), Pseq([0]), Pseq([0]) ])
+							, Ptuple([ Pseq([1]), Pseq([0.5]), Pseq([0.5]), Pseq([0]) ])
+						], [1,1].normalizeSum)
+					])
+				], [1,1].normalizeSum)
 			], lineWeighting, inf).asStream //lines
-
 			, 1 //velocity switch. 0: in line, 1: separate pattern
 
 			, Prand( (60..80), inf).asStream //if velocity switch == 1, this pattern is used for velocity
