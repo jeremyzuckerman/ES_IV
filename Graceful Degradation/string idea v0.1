@@ -1,0 +1,21 @@
+(
+var numNotes=100, cresc, hairpin, dyn, dyn_sw=0.5,pchSet1.pchSet2;
+
+cresc = #[2,4,6,7].choose;
+hairpin = #[4,8,12,14].choose;
+pchSet1 = #[68,69].choose;
+pchSet2 = #[90,92].choose;
+
+numNotes.do{
+	if (dyn_sw.coin==true) //dyn=1 is true
+	{dyn=cresc;
+
+
+
+
+
+
+	}{dyn=hairpin};
+	dyn.postln;
+}
+)

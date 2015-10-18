@@ -1,5 +1,3 @@
-/* make a polyphonic version using do loops for the multiple SimpleMIDIFile(s) and nested Ptuples in the function call */
-
 /////////////////////////////////////////
 //dynamic weighting of lines implemented!
 
@@ -84,12 +82,14 @@ gestureDurScale=gestureDur/speedUpProcess; //timescaling. makes file faster than
 w1 = Env([1,0], [gestureDurScale]); //time scaled weighting envs
 w2 = Env([0,1], [gestureDurScale]);
 
-weighting = Ptuple([w1, w2]).collect(_.normalizeSum); //dynamic weighting method using envelopes
-//weighting = [0,1]; //static values
+// weighting = Ptuple([w1, w2]).collect(_.normalizeSum); //dynamic weighting method using envelopes
+weighting = [1,1,0.7].normalizeSum; //static values
 
 //do some iterations and choose best one
 fork{
-	2.do{
+	4.do{
+		var note;
+		note = #[60,61,62,63].choose;
 		~algoMIDI1_ES4.value(
 			"/Users/jeremyzuckerman/Documents/ES_IV/MIDI/test1 "++Main.elapsedTime.round(0.1)++".mid" //filename
 
@@ -97,11 +97,22 @@ fork{
 
 			, Pwrand([
 				//pchs, note values (e.g. 8th, 16th, etc), note duration, velocity
-				Ptuple([ Pseq([60,62,63]), Pseq([0.25,0.25,0.5]), Pseq([0.25,0.25,0.25]) ]), //only have three Patterns in the Ptuplea because velocity switch is set==1
-				Ptuple([ Pseq([67,69,65]), Pseq([0.25,0.5,0.25]), Pseq([0.25,0.5,0.25]) ])
+				Pseq([
+					Ptuple([ Pseq(Array.fill(6, {note})), Pseq(Array.fill(6, {1/6})), Pseq(Array.fill(6, {1/6})), Pseq([110, 80, 80, 110, 80, 80]) ])
+					, Ptuple([ Pseq([1]), Pseq([1]), Pseq([1]), Pseq([0]) ])
+				])
+				, Pseq([
+					Ptuple([ Pseq([note, note, note]), Pseq([1/6,1/6,1/6]), Pseq([1/6,1/6,1/6]), Pseq([110, 80, 80]) ])
+					, Ptuple([ Pseq([1]), Pseq([1]), Pseq([1]), Pseq([0]) ])
+				])
+				, Pseq([
+					Ptuple([ Pseq([note, note, note]), Pseq([1/6,1/6,1/6]), Pseq([1/6,1/6,1/6]), Pseq([110, 80, 80]) ])
+					, Ptuple([ Pseq([1]), Pseq([1]), Pseq([1]), Pseq([0]) ])
+					, Ptuple([ Pseq([note, note, note]), Pseq([1/6,1/6,1/6]), Pseq([1/6,1/6,1/6]), Pseq([110, 80, 80]) ])
+				])
 			], weighting, inf).asStream //lines
 
-			, 1 //velocity switch. 0: in line, 1: separate pattern
+			, 0 //velocity switch. 0: in line, 1: separate pattern
 
 			, Prand( (60..80), inf).asStream //if velocity switch == 1, this pattern is used for velocity
 			, speedUpProcess //makes file faster than RT by this factor
