@@ -1,4 +1,7 @@
+/////////////////////////////
 //wind gestures 2
+
+//separate into Fl, Cl, Bs Cl, Bsn
 (
 var lineWeighting, lw1, lw2, lw3, restWeighting, gestureDur=60, speedUpProcess=40, gestureDurScale;
 var line1_restWeighting, line1_rw1, line1_rw2, line1_rw3, line1_rw4, line1_rw5, line1_rw6, line1_rw7;

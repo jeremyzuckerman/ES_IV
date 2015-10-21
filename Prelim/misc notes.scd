@@ -1,3 +1,19 @@
+//can have static and dynamic values
+(
+var a,b,c,d;
+
+// a = Ptuple([0, 1, Env([10,20],[5]) ]).collect(_.normalizeSum).asStream;
+a = Ptuple([0, 1, Env([10,20],[5]) ]).asStream;
+
+fork{
+	10.do{
+		a.next.postln;
+
+		0.5.wait;
+	}
+}
+)
+
 //switching loop on and off. needs fork to be timed
 ~a=1;
 ~a=0;

@@ -66,11 +66,11 @@ p6 = 68;
 
 //do some iterations and choose best one
 fork{
-	6.do{
+	4.do{
 		var note;
 		//note = #[60,61,62,63].choose;
 		~algoMIDI1_ES4.value(
-			"/Users/jeremyzuckerman/Documents/ES_IV/MIDI/test1 "++Main.elapsedTime.round(0.1)++".mid" //filename
+			"/Users/jeremyzuckerman/Documents/ES_IV/MIDI/tpt_and_Cl "++Main.elapsedTime.round(0.1)++".mid" //filename
 			, bpm
 			, gestureDur //duration of file
 
