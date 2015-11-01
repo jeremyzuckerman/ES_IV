@@ -1,7 +1,7 @@
 //use to make random start points
 (
 var time;
-time = #[4,5,6,7]*2;
+time = #[6,7,8]*2;
 
 ~algoMIDI1_ES4.value(
 	"/Users/jeremyzuckerman/Documents/ES_IV/MIDI/startPoints "++Main.elapsedTime.round(0.1)++".mid" //filename

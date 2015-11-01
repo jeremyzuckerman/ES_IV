@@ -214,7 +214,7 @@ fork{
 };
 )
 
-//begining. lines transform from homogenous to varied rhythmically - v7 longer. added exponential curves to rest weighting envs
+//beginning. lines transform from homogenous to varied rhythmically - v7 longer. added exponential curves to rest weighting envs
 (
 var lineWeighting, lw1, lw2, lw3, restWeighting, gestureDur=130, speedUpProcess=40, gestureDurScale;
 var line1_restWeighting, line1_rw1, line1_rw2, line1_rw3, line1_rw4, line1_rw5, line1_rw6, line1_rw7;

@@ -1,3 +1,42 @@
+////////////////////////////
+//envelope indexing an array
+(
+var a,b,c,d;
+
+a = #[12, 8, 4, 2, 1].reverse; //.reverse is so great.
+
+b = Env([a.size-1, 0], #[10]).asStream;
+
+fork{
+	100.do{
+		a[b.next.round(1)].postln;
+		0.1.wait;
+	}
+}
+)
+
+//as a function
+~func = {|array, stream|
+	fork{
+		100.do{
+			array[stream.next].postln;
+			0.1.wait;
+		}
+	}
+};
+
+(
+var a, b;
+a = #[12, 8, 4, 2, 1];
+b = Env([0, a.size-1], #[10]).asStream.round(1);
+
+~func.value( a, b )
+)
+
+(
+Ptuple([ Pseq([0],
+
+///////////////////////////////////
 //can have static and dynamic values
 (
 var a,b,c,d;
